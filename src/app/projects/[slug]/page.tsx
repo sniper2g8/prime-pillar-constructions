@@ -25,7 +25,10 @@ type Project = {
   updated_at: string;
 };
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  // Unwrap the params promise
+  const params = await props.params;
+  
   const supabase = await createClient();
   
   const { data: project, error } = await supabase
@@ -55,23 +58,13 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export async function generateStaticParams() {
-  const supabase = await createClient();
+// Remove generateStaticParams to avoid cookies context issues
+// We'll rely on dynamic rendering instead
+
+export default async function ProjectDetailPage(props: { params: Promise<{ slug: string }> }) {
+  // Unwrap the params promise
+  const params = await props.params;
   
-  const { data: projects, error } = await supabase
-    .from('projects')
-    .select('slug');
-
-  if (error) {
-    return [];
-  }
-
-  return projects.map((project: { slug: string }) => ({
-    slug: project.slug,
-  }));
-}
-
-export default async function ProjectDetailPage({ params }: { params: { slug: string } }) {
   const supabase = await createClient();
   
   const { data: project, error } = await supabase
