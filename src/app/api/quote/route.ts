@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import { z } from "zod";
+import { createClient } from '@/lib/supabase/server';
 
 const quoteSchema = z.object({
   // Step 1: Personal Information
@@ -24,13 +25,36 @@ export async function POST(request: NextRequest) {
     // Validate the request body
     const validatedData = quoteSchema.parse(body);
     
-    // In a real application, you would:
-    // 1. Save to database
-    // 2. Send email notification
-    // 3. Process the quote request
+    // Create Supabase client
+    const supabase = await createClient();
     
-    // For now, we'll just log the data
-    console.log("Quote form submission:", validatedData);
+    // Save to database
+    const { error } = await supabase
+      .from('inquiries')
+      .insert({
+        type: 'quote',
+        name: validatedData.name,
+        email: validatedData.email,
+        phone: validatedData.phone,
+        company: validatedData.company,
+        services_interested: validatedData.services,
+        project_details: {
+          description: validatedData.description,
+          timeline: validatedData.timeline,
+          budget: validatedData.budget
+        },
+        message: validatedData.description,
+        status: 'new'
+      });
+    
+    if (error) {
+      console.error("Error saving quote to database:", error);
+      throw new Error("Failed to save quote request");
+    }
+    
+    // In a real application, you would also:
+    // 1. Send email notification to the company
+    // 2. Send confirmation email to the client
     
     return new Response(
       JSON.stringify({ 
@@ -56,7 +80,7 @@ export async function POST(request: NextRequest) {
         status: 400,
         headers: {
           "Content-Type": "application/json",
-        },
+      },
       }
     );
   }
