@@ -1,4 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PrimePillar Constructions Website
+
+This is a [Next.js](https://nextjs.org) project for PrimePillar Constructions Ltd, a Ghanaian construction company specializing in mining, petroleum, oil & gas, energy, and infrastructure projects.
+
+## Project Overview
+
+PrimePillar Constructions Ltd is building a complete, production-ready website for their construction business. The website includes:
+
+- Homepage with hero section, services grid, industries showcase, and testimonials
+- About page with company information, vision/mission, and leadership team
+- Services pages with detailed information about each service offering
+- Projects portfolio showcasing completed and ongoing projects
+- Equipment catalog for hire
+- Health, Safety & Environment (HSE) policy page
+- Contact page with inquiry form
+- Multi-step quote request form
+
+## Technology Stack
+
+- **Framework:** Next.js 14+ (App Router)
+- **Database/Backend:** Supabase (PostgreSQL, Auth, Storage)
+- **Hosting:** Vercel
+- **Styling:** Tailwind CSS
+- **UI Components:** shadcn/ui
+- **Animations:** Framer Motion
+- **Forms:** React Hook Form + Zod validation
+- **Icons:** Lucide React
 
 ## Getting Started
 
@@ -19,6 +45,57 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Project Structure
+
+```
+/app
+  /layout.tsx              # Root layout with providers
+  /page.tsx                # Homepage
+  /about/page.tsx          # About page
+  /services/page.tsx       # Services listing
+  /services/[slug]/page.tsx # Individual service
+  /projects/page.tsx       # Projects portfolio
+  /projects/[slug]/page.tsx # Project detail
+  /equipment/page.tsx      # Equipment catalog
+  /hse/page.tsx           # HSE Policy page
+  /contact/page.tsx       # Contact page
+  /quote/page.tsx         # Quote request form
+  /api
+    /contact/route.ts     # Contact form handler
+    /quote/route.ts       # Quote form handler
+  /globals.css            # Global styles
+
+/components
+  /layout
+    /header.tsx           # Navigation header
+    /footer.tsx           # Site footer
+    /mobile-nav.tsx       # Mobile navigation
+  /sections
+    /hero.tsx             # Homepage hero
+    /services-grid.tsx    # Services display
+    /projects-grid.tsx    # Projects display
+    /stats-bar.tsx        # Statistics section
+    /testimonials.tsx     # Testimonials carousel
+    /cta-section.tsx      # Call-to-action blocks
+    /industries.tsx       # Industries tabs
+    /team.tsx             # Team members
+    /values.tsx           # Core values display
+  /ui                     # shadcn/ui components
+  /forms
+    /contact-form.tsx     # Contact form
+    /quote-form.tsx       # Quote request form
+
+/lib
+  /supabase
+    /client.ts            # Supabase browser client
+    /server.ts            # Supabase server client
+  /utils.ts               # Utility functions
+  /constants.ts           # Site constants
+
+/types
+  /database.ts            # TypeScript types
+```
 
 ## Learn More
 
