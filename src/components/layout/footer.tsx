@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Facebook, Twitter, Linkedin } from "lucide-react";
+import { Logo } from "./logo";
 
 export function Footer() {
   const navItems = [
@@ -29,7 +30,9 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <h3 className="text-xl font-bold mb-4">PRIME<span className="text-secondary-300">PILLAR</span></h3>
+            <div className="mb-4">
+              <Logo size="small" variant="footer" />
+            </div>
             <p className="text-gray-300 mb-4">
               Solid Pillars, Lasting Legacy. Providing construction services for mining, petroleum, oil & gas, energy, industrial, and public infrastructure sectors.
             </p>

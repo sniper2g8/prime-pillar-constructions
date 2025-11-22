@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { Logo } from "./logo";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -36,8 +37,8 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="text-xl font-bold text-primary-500">
-              PRIME<span className="text-secondary-500">PILLAR</span>
+            <Link href="/">
+              <Logo size="small" />
             </Link>
           </div>
 

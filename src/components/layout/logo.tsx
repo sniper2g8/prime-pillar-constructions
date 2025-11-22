@@ -3,18 +3,21 @@ import Image from 'next/image';
 interface LogoProps {
   className?: string;
   size?: 'small' | 'default' | 'large';
+  variant?: 'default' | 'footer';
 }
 
-export function Logo({ className = '', size = 'default' }: LogoProps) {
+export function Logo({ className = '', size = 'default', variant = 'default' }: LogoProps) {
   const sizes = {
     small: { width: 150, height: 40 },
     default: { width: 220, height: 60 },
     large: { width: 300, height: 80 },
   };
   
+  const logoSrc = variant === 'footer' ? '/footer_logo.png' : '/logo.png';
+  
   return (
     <Image
-      src="/images/logo.png"
+      src={logoSrc}
       alt="PrimePillar Constructions"
       width={sizes[size].width}
       height={sizes[size].height}
