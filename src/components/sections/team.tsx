@@ -1,17 +1,21 @@
+"use client";
+
+import { useState } from "react";
+
 const teamMembers = [
   {
-    id: 1,
+    id: "smaila-shaibu-mensah",
     name: "Smaila Shaibu Mensah",
     role: "Co-Founder & Director",
     title: "Director",
     bio: "Brings a unique blend of technological innovation and practical construction knowledge. Expertise in integrating modern technology with construction processes ensures efficiency and precision in project delivery.",
     qualifications: "B.Tech in Computer Science and Engineering, PCTE Institute of Engineering and Technology, Ludhiana, India",
     experience: "Over 10 years providing architectural services and road signage solutions for oil and gas industry and mining sector. Successfully delivered projects for TechnipFMC and Heat Gold Fields.",
-    imageUrl: "/placeholder.jpg",
+    imageUrl: "/Smaila.jpg",
     isDirector: true,
   },
   {
-    id: 2,
+    id: "nana-osei-yaw",
     name: "Nana Osei Yaw",
     role: "Co-Founder & Director",
     title: "Director",
@@ -36,21 +40,54 @@ export function Team() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {teamMembers.map((member) => (
-            <div key={member.id} className="flex flex-col md:flex-row items-center gap-8 bg-white p-8 rounded-lg shadow-sm">
-              <div className="bg-gray-200 border-2 border-dashed rounded-xl w-48 h-48" />
-              <div>
-                <h3 className="text-2xl font-bold text-gray-900">{member.name}</h3>
-                <p className="text-accent-500 font-medium mb-3">{member.title}</p>
-                <p className="text-gray-700 mb-4">{member.bio}</p>
-                <div className="bg-gray-100 p-4 rounded">
-                  <p className="text-sm font-medium text-gray-900">Qualifications</p>
-                  <p className="text-sm text-gray-700">{member.qualifications}</p>
-                </div>
-              </div>
-            </div>
+            <TeamMember key={member.id} member={member} />
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+export function TeamWithoutHeading() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+      {teamMembers.map((member) => (
+        <TeamMember key={member.id} member={member} />
+      ))}
+    </div>
+  );
+}
+
+function TeamMember({ member }: { member: typeof teamMembers[0] }) {
+  const [imageSrc, setImageSrc] = useState(member.imageUrl);
+
+  const handleImageError = () => {
+    if (imageSrc !== "/placeholder.jpg") {
+      setImageSrc("/placeholder.jpg");
+    }
+  };
+
+  return (
+    <div className="flex flex-col md:flex-row items-center gap-8 bg-white p-8 rounded-lg shadow-sm">
+      <div className="flex-shrink-0">
+        <div className="bg-gray-200 rounded-xl w-48 h-48 overflow-hidden">
+          <img 
+            src={imageSrc} 
+            alt={member.name}
+            className="w-full h-full object-cover"
+            onError={handleImageError}
+          />
+        </div>
+      </div>
+      <div>
+        <h3 className="text-2xl font-bold text-gray-900">{member.name}</h3>
+        <p className="text-accent-500 font-medium mb-3">{member.title}</p>
+        <p className="text-gray-700 mb-4">{member.bio}</p>
+        <div className="bg-gray-100 p-4 rounded">
+          <p className="text-sm font-medium text-gray-900">Qualifications</p>
+          <p className="text-sm text-gray-700">{member.qualifications}</p>
+        </div>
+      </div>
+    </div>
   );
 }

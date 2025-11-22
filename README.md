@@ -46,6 +46,29 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Database Setup
+
+To set up the Supabase database with the required schema and seed data:
+
+1. Create a Supabase project at [supabase.com](https://supabase.com/)
+2. Copy the database connection details to your `.env` file
+3. Run the SQL schema from `supabase-schema.sql` in your Supabase SQL editor
+4. Seed the database with real company data:
+
+```bash
+# Seed the database with initial data
+npm run setup:db
+
+# Or reset and re-seed the database (clears existing data)
+npm run reset:db
+```
+
+The database will be populated with:
+- 8 Services from the company's offerings
+- 3 Projects showcasing the company's work
+- 8 Equipment items available for hire
+- 2 Team members (company directors)
+
 ## Project Structure
 
 ```

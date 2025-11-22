@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const testimonials = [
   {
-    id: 1,
+    id: "technipfmc-testimonial",
     clientName: "Kwame Asante",
     company: "TechnipFMC",
     role: "Project Manager",
@@ -12,7 +12,7 @@ const testimonials = [
     rating: 5,
   },
   {
-    id: 2,
+    id: "heat-gold-fields-testimonial",
     clientName: "Akosua Mensah",
     company: "Heat Gold Fields",
     role: "Operations Director",
@@ -20,7 +20,7 @@ const testimonials = [
     rating: 5,
   },
   {
-    id: 3,
+    id: "armed-forces-testimonial",
     clientName: "Kofi Boateng",
     company: "Ghana Armed Forces",
     role: "Facilities Manager",

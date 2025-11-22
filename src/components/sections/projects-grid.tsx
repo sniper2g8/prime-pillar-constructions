@@ -1,52 +1,62 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { createClient } from '@/lib/supabase/client';
 
 interface Project {
-  id: number;
+  id: string;
   title: string;
+  slug: string;
   client: string;
   industry: string;
-  year: number;
+  year?: number;
   status: "completed" | "ongoing" | "upcoming";
-  shortDescription: string;
-  thumbnail: string;
+  short_description: string;
+  thumbnail_url?: string;
+  created_at: string;
+  updated_at: string;
 }
 
-const projects: Project[] = [
-  {
-    id: 1,
-    title: "Road Signs Construction",
-    client: "TechnipFMC",
-    industry: "oil_gas",
-    year: 2017,
-    status: "completed",
-    shortDescription: "Design, fabrication, and installation of road signage for oil and gas facility operations.",
-    thumbnail: "/placeholder.jpg"
-  },
-  {
-    id: 2,
-    title: "Site Signage Systems",
-    client: "Heat Gold Fields (formerly FGR)",
-    industry: "mining",
-    year: 2016,
-    status: "completed",
-    shortDescription: "Comprehensive road signs and site signage systems for mining operations.",
-    thumbnail: "/placeholder.jpg"
-  },
-  {
-    id: 3,
-    title: "Officers Residential Buildings",
-    client: "Ghana Armed Forces",
-    industry: "government",
-    year: 2025,
-    status: "ongoing",
-    shortDescription: "Construction of 6-Unit 4-Bedroom residential buildings for officers at Burma Camp.",
-    thumbnail: "/placeholder.jpg"
-  }
-];
-
 export function ProjectsGrid() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const supabase = createClient();
+      
+      const { data, error } = await supabase
+        .from('projects')
+        .select('*')
+        .limit(3);
+
+      if (error) {
+        console.error('Error fetching projects:', error);
+      } else {
+        setProjects(data || []);
+      }
+      setLoading(false);
+    };
+
+    fetchProjects();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Featured Projects</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Loading featured projects...
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -75,13 +85,13 @@ export function ProjectsGrid() {
                   </span>
                 </div>
                 <p className="text-gray-600 mb-2">Client: {project.client}</p>
-                <p className="text-gray-600 mb-4">{project.shortDescription}</p>
+                <p className="text-gray-600 mb-4">{project.short_description}</p>
                 <div className="flex justify-between items-center">
                   <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800">
                     {project.industry.replace("_", " & ").replace(/\b\w/g, l => l.toUpperCase())}
                   </span>
                   <Link 
-                    href={`/projects/${project.id}`}
+                    href={`/projects/${project.slug}`}
                     className="text-primary-500 font-medium hover:text-primary-700 transition-colors"
                   >
                     View Details →

@@ -16,10 +16,10 @@ export const metadata: Metadata = {
   },
 };
 
-// Mock data - in a real app, this would come from a database
+// Real data from the prompt
 const projects = [
   {
-    id: 1,
+    id: "technipfmc-road-signs",
     title: "Road Signs Construction",
     client: "TechnipFMC",
     industry: "oil_gas",
@@ -29,7 +29,7 @@ const projects = [
     thumbnail: "/placeholder.jpg"
   },
   {
-    id: 2,
+    id: "heat-gold-fields-signage",
     title: "Site Signage Systems",
     client: "Heat Gold Fields (formerly FGR)",
     industry: "mining",
@@ -39,7 +39,7 @@ const projects = [
     thumbnail: "/placeholder.jpg"
   },
   {
-    id: 3,
+    id: "burma-camp-residential",
     title: "Officers Residential Buildings",
     client: "Ghana Armed Forces",
     industry: "government",

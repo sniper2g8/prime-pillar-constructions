@@ -1,5 +1,6 @@
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { TeamWithoutHeading } from "@/components/sections/team";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -117,45 +118,7 @@ export default function AboutPage() {
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              <div className="flex flex-col md:flex-row items-center gap-8">
-                <div className="bg-gray-200 border-2 border-dashed rounded-xl w-48 h-48" />
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900">Smaila Shaibu Mensah</h3>
-                  <p className="text-accent-500 font-medium mb-3">Co-Founder & Director</p>
-                  <p className="text-gray-700 mb-4">
-                    Brings a unique blend of technological innovation and practical construction knowledge. 
-                    Expertise in integrating modern technology with construction processes ensures efficiency 
-                    and precision in project delivery.
-                  </p>
-                  <div className="bg-gray-100 p-4 rounded">
-                    <p className="text-sm font-medium text-gray-900">Qualifications</p>
-                    <p className="text-sm text-gray-700">
-                      B.Tech in Computer Science and Engineering, PCTE Institute of Engineering and Technology, Ludhiana, India
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="flex flex-col md:flex-row items-center gap-8">
-                <div className="bg-gray-200 border-2 border-dashed rounded-xl w-48 h-48" />
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900">Nana Osei Yaw</h3>
-                  <p className="text-accent-500 font-medium mb-3">Co-Founder & Director</p>
-                  <p className="text-gray-700 mb-4">
-                    Applies strong analytical and problem-solving skills to project planning, cost estimation, 
-                    and quality assurance. Mathematical precision ensures every project is executed with accuracy 
-                    and excellence.
-                  </p>
-                  <div className="bg-gray-100 p-4 rounded">
-                    <p className="text-sm font-medium text-gray-900">Qualifications</p>
-                    <p className="text-sm text-gray-700">
-                      BSc in Mathematics, Kwame Nkrumah University of Science and Technology (KNUST), Kumasi, Ghana
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <TeamWithoutHeading />
           </div>
         </section>
 

@@ -16,59 +16,59 @@ export const metadata: Metadata = {
   },
 };
 
-// Mock data - in a real app, this would come from a database
+// Real data from the prompt
 const equipment = [
   {
-    id: 1,
+    id: "poker-vibrator",
     name: "Poker Vibrator",
     category: "Concrete Equipment",
     quantity: 15,
     isAvailable: true
   },
   {
-    id: 2,
+    id: "concrete-mixer",
     name: "Concrete Mixer",
     category: "Concrete Equipment",
     quantity: 1,
     isAvailable: true
   },
   {
-    id: 3,
+    id: "compactor",
     name: "Compactor",
     category: "Earth Moving",
     quantity: 4,
     isAvailable: true
   },
   {
-    id: 4,
+    id: "jack-hammer",
     name: "Jack Hammer",
     category: "Demolition",
     quantity: 4,
     isAvailable: true
   },
   {
-    id: 5,
+    id: "angle-grinder",
     name: "Angle Grinder",
     category: "Power Tools",
     quantity: 5,
     isAvailable: true
   },
   {
-    id: 6,
+    id: "drilling-machine",
     name: "Drilling Machine",
     category: "Power Tools",
     quantity: 2,
     isAvailable: true
   },
   {
-    id: 7,
+    id: "head-pan",
     name: "Head Pan",
     category: "Manual Tools",
     quantity: 20,
     isAvailable: true
   },
   {
-    id: 8,
+    id: "safety-equipment",
     name: "Safety Equipment (PPE Sets)",
     category: "Safety",
     quantity: 50,
