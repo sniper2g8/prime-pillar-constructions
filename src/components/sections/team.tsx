@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 const teamMembers = [
   {
@@ -31,14 +32,14 @@ export function Team() {
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Leadership Team</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Leadership Team</h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Meet the visionary leaders driving PrimePillar Constructions towards excellence.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {teamMembers.map((member) => (
             <TeamMember key={member.id} member={member} />
           ))}
@@ -50,7 +51,7 @@ export function Team() {
 
 export function TeamWithoutHeading() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
       {teamMembers.map((member) => (
         <TeamMember key={member.id} member={member} />
       ))}
@@ -68,24 +69,42 @@ function TeamMember({ member }: { member: typeof teamMembers[0] }) {
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-center gap-8 bg-white p-8 rounded-lg shadow-sm">
-      <div className="flex-shrink-0">
-        <div className="bg-gray-200 rounded-xl w-48 h-48 overflow-hidden">
-          <img 
-            src={imageSrc} 
+    <div className="flex flex-col md:flex-row bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+      {/* Image Section */}
+      <div className="md:w-2/5">
+        <div className="h-64 md:h-full relative">
+          <Image
+            src={imageSrc}
             alt={member.name}
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
             onError={handleImageError}
           />
         </div>
       </div>
-      <div>
-        <h3 className="text-2xl font-bold text-gray-900">{member.name}</h3>
-        <p className="text-accent-500 font-medium mb-3">{member.title}</p>
-        <p className="text-gray-700 mb-4">{member.bio}</p>
-        <div className="bg-gray-100 p-4 rounded">
-          <p className="text-sm font-medium text-gray-900">Qualifications</p>
-          <p className="text-sm text-gray-700">{member.qualifications}</p>
+      
+      {/* Content Section */}
+      <div className="md:w-3/5 p-8 flex flex-col justify-between">
+        <div>
+          <div className="flex flex-wrap items-center justify-between mb-3">
+            <h3 className="text-2xl font-bold text-gray-900">{member.name}</h3>
+            <span className="bg-primary-100 text-primary-800 text-sm font-semibold px-3 py-1 rounded-full">
+              {member.title}
+            </span>
+          </div>
+          
+          <p className="text-accent-600 font-medium mb-4">{member.role}</p>
+          
+          <p className="text-gray-700 mb-6 leading-relaxed">
+            {member.bio}
+          </p>
+        </div>
+        
+        <div className="border-t border-gray-200 pt-6">
+          <h4 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-2">Qualifications</h4>
+          <p className="text-sm text-gray-700 leading-relaxed">
+            {member.qualifications}
+          </p>
         </div>
       </div>
     </div>

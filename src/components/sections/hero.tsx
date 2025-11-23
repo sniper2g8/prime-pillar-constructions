@@ -1,15 +1,23 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
 export function Hero() {
   return (
-    <section className="relative bg-gradient-to-r from-primary-500 to-primary-700 text-white overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-accent-400 rounded-full mix-blend-multiply filter blur-xl"></div>
-        <div className="absolute top-3/4 right-1/4 w-64 h-64 bg-secondary-400 rounded-full mix-blend-multiply filter blur-xl"></div>
+    <section className="relative text-white overflow-hidden">
+      {/* Background image */}
+      <div className="absolute inset-0">
+        <Image
+          src="/hero.jpg"
+          alt="Construction site"
+          fill
+          className="object-cover"
+          priority
+        />
+        {/* Overlay to ensure text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-500/80 to-primary-700/80"></div>
       </div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 relative z-10">
