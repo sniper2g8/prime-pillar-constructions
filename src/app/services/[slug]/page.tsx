@@ -4,14 +4,17 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { createClient } from '@/lib/supabase/server';
+import Image from "next/image";
 
 // Define the Service type
 type Service = {
   id: string;
   title: string;
   slug: string;
-  description: string;
+  short_description: string;
+  full_description?: string;
   features: string[];
+  image_url?: string;
   created_at: string;
   updated_at: string;
 };
@@ -62,10 +65,10 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 
   return {
     title: `${service.title} | PrimePillar Constructions`,
-    description: service.description,
+    description: service.short_description,
     openGraph: {
       title: `${service.title} | PrimePillar Constructions`,
-      description: service.description,
+      description: service.short_description,
       url: `https://www.primepillargh.com/services/${params.slug}`,
       siteName: 'PrimePillar Constructions',
       locale: 'en_GH',
@@ -99,6 +102,15 @@ export default async function ServiceDetailPage(props: { params: Promise<{ slug:
     .select('*')
     .limit(2);
 
+  // Check if any features are actually image paths (for gallery display)
+  const imagePaths = service.features.filter((feature: string) => 
+    feature.startsWith('/Architectural Works/') || 
+    feature.startsWith('/Construction/') || 
+    feature.startsWith('/Facility Maintenance/')
+  );
+
+  const nonImageFeatures = service.features.filter((feature: string) => !imagePaths.includes(feature));
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -127,25 +139,66 @@ export default async function ServiceDetailPage(props: { params: Promise<{ slug:
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
+              {/* Service Image */}
+              {service.image_url && (
+                <div className="mb-8 rounded-lg overflow-hidden">
+                  <Image 
+                    src={service.image_url} 
+                    alt={service.title} 
+                    width={800} 
+                    height={400} 
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+              )}
+
+              {/* Gallery for Architectural Works */}
+              {imagePaths.length > 0 && (
+                <div className="mb-12">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-6">Project Gallery</h2>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {imagePaths.map((image: string, index: number) => (
+                      <div key={index} className="relative rounded-lg overflow-hidden aspect-square">
+                        <Image 
+                          src={image} 
+                          alt={`${service.title} - Image ${index + 1}`} 
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               <div className="prose prose-lg max-w-none mb-12">
                 <p className="text-gray-700 text-lg">
-                  {service.description}
+                  {service.short_description}
                 </p>
+                {service.full_description && (
+                  <div className="mt-6">
+                    {service.full_description.split('\n').map((paragraph: string, index: number) => (
+                      <p key={index} className="text-gray-700 mb-4">{paragraph}</p>
+                    ))}
+                  </div>
+                )}
               </div>
 
-              <div className="mb-16">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Our Services Include:</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {service.features.map((feature: string, index: number) => (
-                    <div key={index} className="flex items-start">
-                      <div className="flex-shrink-0 h-6 w-6 rounded-full bg-primary-100 flex items-center justify-center mr-3 mt-1">
-                        <div className="h-2 w-2 rounded-full bg-primary-500"></div>
+              {nonImageFeatures.length > 0 && (
+                <div className="mb-16">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-6">Our Services Include:</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {nonImageFeatures.map((feature: string, index: number) => (
+                      <div key={index} className="flex items-start">
+                        <div className="flex-shrink-0 h-6 w-6 rounded-full bg-primary-100 flex items-center justify-center mr-3 mt-1">
+                          <div className="h-2 w-2 rounded-full bg-primary-500"></div>
+                        </div>
+                        <p className="text-gray-700">{feature}</p>
                       </div>
-                      <p className="text-gray-700">{feature}</p>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Related Projects */}
               {projects && projects.length > 0 && (
@@ -154,7 +207,17 @@ export default async function ServiceDetailPage(props: { params: Promise<{ slug:
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {projects.map((project: Project) => (
                       <div key={project.id} className="bg-gray-50 rounded-lg overflow-hidden">
-                        <div className="bg-gray-200 border-2 border-dashed w-full h-48" />
+                        {project.thumbnail_url ? (
+                          <Image 
+                            src={project.thumbnail_url} 
+                            alt={project.title} 
+                            width={400} 
+                            height={200} 
+                            className="w-full h-48 object-cover"
+                          />
+                        ) : (
+                          <div className="bg-gray-200 border-2 border-dashed w-full h-48" />
+                        )}
                         <div className="p-6">
                           <h3 className="text-xl font-semibold text-gray-900 mb-2">{project.title}</h3>
                           <p className="text-gray-600 mb-4">Client: {project.client}</p>

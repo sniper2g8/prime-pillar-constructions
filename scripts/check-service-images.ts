@@ -1,6 +1,5 @@
 import dotenv from 'dotenv'
 import { createClient } from '@supabase/supabase-js'
-import { Service, Project } from '../src/types/database'
 
 // Load environment variables from .env file
 dotenv.config()
@@ -19,45 +18,30 @@ if (!supabaseServiceRole) {
 // Create Supabase client with service role key for admin access
 const supabase = createClient(supabaseUrl, supabaseServiceRole)
 
-async function verifyData() {
-  console.log('Verifying data...')
+async function checkServiceImages() {
+  console.log('Checking service images...')
   
   // Get all services
-  const { data: services, error: servicesError } = await supabase
+  const { data: services, error: fetchError } = await supabase
     .from('services')
     .select('*')
+    .order('display_order')
 
-  if (servicesError) {
-    console.error('Error fetching services:', servicesError)
+  if (fetchError) {
+    console.error('Error fetching services:', fetchError)
     return
   }
 
-  console.log(`All services:`)
+  console.log(`Found ${services.length} services:`)
+  
   services.forEach(service => {
     console.log(`- ${service.title}: ${service.image_url || 'No image'}`)
   })
-
-  // Get all projects
-  const { data: projects, error: projectsError } = await supabase
-    .from('projects')
-    .select('*')
-
-  if (projectsError) {
-    console.error('Error fetching projects:', projectsError)
-    return
-  }
-
-  console.log(`\nAll projects:`)
-  projects.forEach(project => {
-    console.log(`- ${project.title}: ${project.thumbnail_url || 'No thumbnail'}`)
-  })
-
-  console.log('\nVerification complete!')
 }
 
-// Run the verification if this file is executed directly
+// Run the check if this file is executed directly
 if (require.main === module) {
-  verifyData().catch(console.error)
+  checkServiceImages().catch(console.error)
 }
 
-export { verifyData }
+export { checkServiceImages }

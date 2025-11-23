@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { createClient } from '@/lib/supabase/server';
+import Image from "next/image";
 
 // Define the Project type
 type Project = {
@@ -129,12 +130,38 @@ export default async function ProjectDetailPage(props: { params: Promise<{ slug:
             <div className="max-w-4xl mx-auto">
               {/* Gallery */}
               <div className="mb-12">
-                <div className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-96 mb-4" />
-                <div className="grid grid-cols-3 gap-4">
-                  {[1, 2, 3].map((item) => (
-                    <div key={item} className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-32" />
-                  ))}
-                </div>
+                {project.thumbnail_url ? (
+                  <div className="relative w-full h-96 mb-4 rounded-xl overflow-hidden">
+                    <Image 
+                      src={project.thumbnail_url} 
+                      alt={project.title} 
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-96 mb-4" />
+                )}
+                {project.gallery && project.gallery.length > 0 ? (
+                  <div className="grid grid-cols-3 gap-4">
+                    {project.gallery.map((image: string, index: number) => (
+                      <div key={index} className="relative rounded-xl overflow-hidden w-full h-32">
+                        <Image 
+                          src={image} 
+                          alt={`${project.title} - Image ${index + 1}`} 
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-3 gap-4">
+                    {[1, 2, 3].map((item) => (
+                      <div key={item} className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-32" />
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Project Info */}

@@ -2,6 +2,8 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import Link from "next/link";
 import { Metadata } from "next";
+import { createClient } from '@/lib/supabase/server';
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: 'Our Projects | PrimePillar Constructions',
@@ -15,40 +17,6 @@ export const metadata: Metadata = {
     type: 'website',
   },
 };
-
-// Real data from the prompt
-const projects = [
-  {
-    id: "technipfmc-road-signs",
-    title: "Road Signs Construction",
-    client: "TechnipFMC",
-    industry: "oil_gas",
-    year: 2017,
-    status: "completed",
-    shortDescription: "Design, fabrication, and installation of road signage for oil and gas facility operations.",
-    thumbnail: "/placeholder.jpg"
-  },
-  {
-    id: "heat-gold-fields-signage",
-    title: "Site Signage Systems",
-    client: "Heat Gold Fields (formerly FGR)",
-    industry: "mining",
-    year: 2016,
-    status: "completed",
-    shortDescription: "Comprehensive road signs and site signage systems for mining operations.",
-    thumbnail: "/placeholder.jpg"
-  },
-  {
-    id: "burma-camp-residential",
-    title: "Officers Residential Buildings",
-    client: "Ghana Armed Forces",
-    industry: "government",
-    year: 2025,
-    status: "ongoing",
-    shortDescription: "Construction of 6-Unit 4-Bedroom residential buildings for officers at Burma Camp.",
-    thumbnail: "/placeholder.jpg"
-  }
-];
 
 const industries = [
   { id: "all", name: "All Projects" },
@@ -67,7 +35,18 @@ const statuses = [
   { id: "upcoming", name: "Upcoming" }
 ];
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const supabase = await createClient();
+  
+  const { data: projects, error } = await supabase
+    .from('projects')
+    .select('*')
+    .order('year', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching projects:', error);
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -129,9 +108,21 @@ export default function ProjectsPage() {
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects.map((project) => (
+              {projects && projects.map((project) => (
                 <div key={project.id} className="bg-gray-50 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                  <div className="bg-gray-200 border-2 border-dashed w-full h-48" />
+                  {/* Project Image */}
+                  {project.thumbnail_url ? (
+                    <div className="w-full h-48 relative">
+                      <Image 
+                        src={project.thumbnail_url} 
+                        alt={project.title} 
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className="bg-gray-200 border-2 border-dashed w-full h-48" />
+                  )}
                   <div className="p-6">
                     <div className="flex justify-between items-start mb-3">
                       <h3 className="text-xl font-semibold text-gray-900">{project.title}</h3>
@@ -146,13 +137,13 @@ export default function ProjectsPage() {
                       </span>
                     </div>
                     <p className="text-gray-600 mb-2">Client: {project.client}</p>
-                    <p className="text-gray-600 mb-4">{project.shortDescription}</p>
+                    <p className="text-gray-600 mb-4">{project.short_description}</p>
                     <div className="flex justify-between items-center">
                       <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800">
-                        {project.industry.replace("_", " & ").replace(/\b\w/g, l => l.toUpperCase())}
+                        {project.industry.replace("_", " & ").replace(/\b\w/g, (l: string) => l.toUpperCase())}
                       </span>
                       <Link 
-                        href={`/projects/${project.id}`}
+                        href={`/projects/${project.slug}`}
                         className="text-primary-500 font-medium hover:text-primary-700 transition-colors"
                       >
                         View Details →
