@@ -2,12 +2,14 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Logo } from "./logo";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,6 +18,9 @@ export function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Determine if we should use light or dark text based on the current page
+  const useLightText = pathname === "/" && !scrolled;
 
   const navItems = [
     { name: "Home", href: "/" },
@@ -49,7 +54,11 @@ export function Header() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-white hover:text-primary-200 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 md:text-gray-700 md:hover:text-primary-600"
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+                    useLightText
+                      ? "text-white hover:text-primary-200"
+                      : "text-gray-700 hover:text-primary-600"
+                  }`}
                 >
                   {item.name}
                 </Link>
@@ -61,7 +70,11 @@ export function Header() {
           <div className="hidden md:block">
             <Link
               href="/quote"
-              className="bg-primary-600 hover:bg-primary-700 text-white px-5 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+              className={`px-5 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+                useLightText
+                  ? "bg-white text-primary-600 hover:bg-gray-100"
+                  : "bg-primary-600 hover:bg-primary-700 text-white"
+              }`}
             >
               Get a Quote
             </Link>
@@ -71,7 +84,11 @@ export function Header() {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-primary-200 focus:outline-none md:text-gray-700 md:hover:text-primary-600"
+              className={`inline-flex items-center justify-center p-2 rounded-md focus:outline-none ${
+                useLightText
+                  ? "text-white hover:text-primary-200"
+                  : "text-gray-700 hover:text-primary-600"
+              }`}
               aria-expanded="false"
             >
               <span className="sr-only">Open main menu</span>

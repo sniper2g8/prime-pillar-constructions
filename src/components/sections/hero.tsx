@@ -16,8 +16,8 @@ export function Hero() {
           className="object-cover"
           priority
         />
-        {/* Simplified overlay for better text readability */}
-        <div className="absolute inset-0 bg-primary-900/70"></div>
+        {/* Lighter overlay to ensure nav readability */}
+        <div className="absolute inset-0 bg-black/40"></div>
       </div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-32 md:py-40 relative z-10">
@@ -28,7 +28,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            Building Legacies <br className="hidden sm:block" />With Precision
+            Building Excellence <br className="hidden sm:block" />In Construction
           </motion.h1>
           
           <motion.p 
@@ -37,7 +37,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            Specialized construction services for mining, petroleum, oil & gas, energy, industrial, and public infrastructure sectors across Ghana and West Africa.
+            Delivering premium construction services across Ghana and West Africa with precision, quality, and innovation.
           </motion.p>
           
           <motion.div 
@@ -48,13 +48,13 @@ export function Hero() {
           >
             <Link 
               href="/services" 
-              className="bg-white text-primary-600 hover:bg-gray-50 font-medium py-3 px-6 rounded-lg text-center transition-all duration-200 shadow-sm hover:shadow-md"
+              className="bg-gold-600 hover:bg-gold-700 text-white font-bold py-4 px-8 rounded-lg text-center transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
               Our Services
             </Link>
             <Link 
               href="/quote" 
-              className="bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 px-6 rounded-lg text-center transition-all duration-200 shadow-sm hover:shadow-md"
+              className="bg-transparent border-2 border-white text-white hover:bg-white/10 font-bold py-4 px-8 rounded-lg text-center transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
               Get a Quote
             </Link>
@@ -62,7 +62,7 @@ export function Hero() {
         </div>
       </div>
       
-      {/* Simplified scroll indicator */}
+      {/* Scroll indicator */}
       <motion.div 
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden md:block"
         initial={{ opacity: 0 }}

@@ -46,7 +46,7 @@ export function Testimonials() {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-primary-50 to-gray-100">
+    <section className="py-20 bg-gradient-to-br from-amber-50 to-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           className="text-center mb-16"
@@ -63,7 +63,7 @@ export function Testimonials() {
 
         <div className="max-w-4xl mx-auto">
           <motion.div 
-            className="bg-white rounded-2xl shadow-xl p-8 md:p-12"
+            className="bg-white rounded-2xl shadow-xl p-8 md:p-12 border border-gold-100"
             key={currentIndex}
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -83,7 +83,7 @@ export function Testimonials() {
                 "{testimonials[currentIndex].content}"
               </blockquote>
               
-              <div className="border-t border-gray-200 pt-6">
+              <div className="border-t border-gold-200 pt-6">
                 <p className="text-lg font-semibold text-gray-900">
                   {testimonials[currentIndex].clientName}
                 </p>
@@ -100,7 +100,7 @@ export function Testimonials() {
                 key={index}
                 onClick={() => setCurrentIndex(index)}
                 className={`w-4 h-4 rounded-full transition-all duration-300 ${
-                  index === currentIndex ? "bg-primary-600 w-8" : "bg-gray-300"
+                  index === currentIndex ? "bg-gold-600 w-8" : "bg-gray-300"
                 }`}
                 aria-label={`Go to testimonial ${index + 1}`}
               />
@@ -110,7 +110,7 @@ export function Testimonials() {
           <div className="flex justify-center mt-8 space-x-4">
             <button
               onClick={prevTestimonial}
-              className="p-3 rounded-full bg-white shadow-md text-primary-600 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-300"
+              className="p-3 rounded-full bg-white shadow-md text-gold-600 hover:bg-amber-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold-500 transition-all duration-300 transform hover:-translate-y-1"
               aria-label="Previous testimonial"
             >
               <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -119,7 +119,7 @@ export function Testimonials() {
             </button>
             <button
               onClick={nextTestimonial}
-              className="p-3 rounded-full bg-white shadow-md text-primary-600 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-300"
+              className="p-3 rounded-full bg-white shadow-md text-gold-600 hover:bg-amber-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold-500 transition-all duration-300 transform hover:-translate-y-1"
               aria-label="Next testimonial"
             >
               <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">

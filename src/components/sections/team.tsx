@@ -12,7 +12,7 @@ const teamMembers = [
     bio: "Brings a unique blend of technological innovation and practical construction knowledge. Expertise in integrating modern technology with construction processes ensures efficiency and precision in project delivery.",
     qualifications: "B.Tech in Computer Science and Engineering, PCTE Institute of Engineering and Technology, Ludhiana, India",
     experience: "Over 10 years providing architectural services and road signage solutions for oil and gas industry and mining sector. Successfully delivered projects for TechnipFMC and Heat Gold Fields.",
-    imageUrl: "/Smaila.jpg",
+    imageUrl: "/teams/Smaila.jpg",
     isDirector: true,
   },
   {
@@ -23,14 +23,14 @@ const teamMembers = [
     bio: "Applies strong analytical and problem-solving skills to project planning, cost estimation, and quality assurance. Mathematical precision ensures every project is executed with accuracy and excellence.",
     qualifications: "BSc in Mathematics, Kwame Nkrumah University of Science and Technology (KNUST), Kumasi, Ghana",
     experience: "Over 5 years hands-on experience in construction industry. Currently serving as Project Supervisor on Ghana Armed Forces Burma Camp residential buildings project (subcontract for Desimone Ltd).",
-    imageUrl: "/placeholder.jpg",
+    imageUrl: "/teams/nana-osei-yaw.jpeg",
     isDirector: true,
   }
 ];
 
 export function Team() {
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-gradient-to-br from-amber-50 to-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Leadership Team</h2>
@@ -69,7 +69,7 @@ function TeamMember({ member }: { member: typeof teamMembers[0] }) {
   };
 
   return (
-    <div className="flex flex-col md:flex-row bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+    <div className="flex flex-col md:flex-row bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border border-gold-100">
       {/* Image Section */}
       <div className="md:w-2/5">
         <div className="h-64 md:h-full relative">
@@ -88,19 +88,19 @@ function TeamMember({ member }: { member: typeof teamMembers[0] }) {
         <div>
           <div className="flex flex-wrap items-center justify-between mb-3">
             <h3 className="text-2xl font-bold text-gray-900">{member.name}</h3>
-            <span className="bg-primary-100 text-primary-800 text-sm font-semibold px-3 py-1 rounded-full">
+            <span className="bg-gold-100 text-gold-800 text-sm font-bold px-3 py-1 rounded-full">
               {member.title}
             </span>
           </div>
           
-          <p className="text-accent-600 font-medium mb-4">{member.role}</p>
+          <p className="text-gold-600 font-bold mb-4">{member.role}</p>
           
           <p className="text-gray-700 mb-6 leading-relaxed">
             {member.bio}
           </p>
         </div>
         
-        <div className="border-t border-gray-200 pt-6">
+        <div className="border-t border-gold-200 pt-6">
           <h4 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-2">Qualifications</h4>
           <p className="text-sm text-gray-700 leading-relaxed">
             {member.qualifications}

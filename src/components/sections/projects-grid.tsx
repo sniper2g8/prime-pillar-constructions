@@ -46,7 +46,7 @@ export function ProjectsGrid() {
 
   if (loading) {
     return (
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Featured Projects</h2>
@@ -60,7 +60,7 @@ export function ProjectsGrid() {
   }
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           className="text-center mb-16"
@@ -71,7 +71,7 @@ export function ProjectsGrid() {
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Featured Projects</h2>
           <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-            Explore our portfolio of successful construction projects across various industries.
+            Explore our portfolio of successful construction projects.
           </p>
         </motion.div>
         
@@ -79,28 +79,28 @@ export function ProjectsGrid() {
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
-              className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group"
+              className="bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 group"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
               {project.thumbnail_url ? (
-                <div className="relative w-full h-56">
+                <div className="relative w-full h-48">
                   <Image 
                     src={project.thumbnail_url} 
                     alt={project.title} 
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="object-cover"
                   />
                 </div>
               ) : (
-                <div className="bg-gray-200 border-2 border-dashed w-full h-56" />
+                <div className="bg-gray-200 border-2 border-dashed w-full h-48" />
               )}
               <div className="p-6">
                 <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-xl font-semibold text-gray-900 group-hover:text-primary-600 transition-colors">{project.title}</h3>
-                  <span className={`px-3 py-1 text-xs rounded-full font-medium ${
+                  <h3 className="text-lg font-semibold text-gray-900 group-hover:text-gold-600 transition-colors">{project.title}</h3>
+                  <span className={`px-2 py-1 text-xs rounded-full font-medium ${
                     project.status === "completed" 
                       ? "bg-green-100 text-green-800" 
                       : project.status === "ongoing" 
@@ -110,22 +110,17 @@ export function ProjectsGrid() {
                     {project.status.charAt(0).toUpperCase() + project.status.slice(1)}
                   </span>
                 </div>
-                <p className="text-gray-600 mb-2">Client: {project.client}</p>
-                <p className="text-gray-600 mb-4">{project.short_description}</p>
-                <div className="flex justify-between items-center">
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800">
-                    {project.industry.replace("_", " & ").replace(/\b\w/g, l => l.toUpperCase())}
-                  </span>
-                  <Link 
-                    href={`/projects/${project.slug}`}
-                    className="text-primary-600 font-medium hover:text-primary-800 transition-colors flex items-center group"
-                  >
-                    View Details 
-                    <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                  </Link>
-                </div>
+                <p className="text-gray-600 text-sm mb-2">Client: {project.client}</p>
+                <p className="text-gray-600 text-sm mb-4">{project.short_description}</p>
+                <Link 
+                  href={`/projects/${project.slug}`}
+                  className="text-gold-600 font-medium hover:text-gold-700 transition-colors text-sm inline-flex items-center group"
+                >
+                  View Details 
+                  <svg className="w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </Link>
               </div>
             </motion.div>
           ))}
@@ -134,7 +129,7 @@ export function ProjectsGrid() {
         <div className="text-center mt-12">
           <Link 
             href="/projects" 
-            className="inline-flex items-center px-8 py-4 border border-transparent text-base font-medium rounded-xl shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-300 transform hover:-translate-y-1"
+            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-gold-600 hover:bg-gold-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold-500 transition-all duration-300"
           >
             View All Projects
           </Link>

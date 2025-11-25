@@ -49,7 +49,7 @@ export function Industries() {
   const activeIndustryData = industries.find(industry => industry.id === activeIndustry);
 
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
+    <section className="py-20 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           className="text-center mb-16"
@@ -60,7 +60,7 @@ export function Industries() {
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Industries We Serve</h2>
           <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-            Specialized construction expertise across diverse sectors throughout Ghana and West Africa.
+            Specialized construction expertise across diverse sectors.
           </p>
         </motion.div>
 
@@ -71,10 +71,10 @@ export function Industries() {
               <motion.button
                 key={industry.id}
                 onClick={() => setActiveIndustry(industry.id)}
-                className={`flex items-center gap-3 px-6 py-4 rounded-xl transition-all duration-300 ${
+                className={`flex items-center gap-3 px-6 py-3 rounded-lg transition-all duration-300 ${
                   activeIndustry === industry.id
-                    ? "bg-primary-600 text-white shadow-lg"
-                    : "bg-white text-gray-700 hover:bg-gray-100 shadow-md hover:shadow-lg"
+                    ? "bg-gold-600 text-white shadow-md"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 }`}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -90,20 +90,20 @@ export function Industries() {
 
         {activeIndustryData && (
           <motion.div 
-            className="bg-white rounded-2xl p-8 shadow-xl max-w-4xl mx-auto"
+            className="bg-gray-50 rounded-xl p-8 max-w-4xl mx-auto"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
             <div className="flex flex-col md:flex-row items-center gap-8">
               <div className="flex-shrink-0">
-                <div className="w-28 h-28 bg-primary-100 rounded-2xl flex items-center justify-center">
-                  <activeIndustryData.icon className="w-14 h-14 text-primary-600" />
+                <div className="w-20 h-20 bg-gold-100 rounded-xl flex items-center justify-center">
+                  <activeIndustryData.icon className="w-10 h-10 text-gold-600" />
                 </div>
               </div>
               <div className="text-center md:text-left">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">{activeIndustryData.name}</h3>
-                <p className="text-gray-600 text-lg leading-relaxed">{activeIndustryData.description}</p>
+                <h3 className="text-2xl font-bold text-gray-900 mb-3">{activeIndustryData.name}</h3>
+                <p className="text-gray-600 text-lg">{activeIndustryData.description}</p>
               </div>
             </div>
           </motion.div>

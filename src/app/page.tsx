@@ -5,7 +5,6 @@ import { StatsBar } from "@/components/sections/stats-bar";
 import { ServicesGrid } from "@/components/sections/services-grid";
 import { Industries } from "@/components/sections/industries";
 import { ProjectsGrid } from "@/components/sections/projects-grid";
-import { Testimonials } from "@/components/sections/testimonials";
 import { CtaSection } from "@/components/sections/cta-section";
 import { Suspense } from "react";
 
@@ -21,7 +20,6 @@ export default function Home() {
         <Suspense fallback={<div>Loading projects...</div>}>
           <ProjectsGrid />
         </Suspense>
-        <Testimonials />
         <CtaSection />
       </main>
       <Footer />
