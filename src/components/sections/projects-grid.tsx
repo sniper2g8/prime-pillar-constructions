@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createClient } from '@/lib/supabase/client';
+import Image from "next/image";
+import { motion } from "framer-motion";
 
 interface Project {
   id: string;
@@ -44,11 +46,11 @@ export function ProjectsGrid() {
 
   if (loading) {
     return (
-      <section className="py-16 bg-white">
+      <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Featured Projects</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Featured Projects</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto text-lg">
               Loading featured projects...
             </p>
           </div>
@@ -58,23 +60,47 @@ export function ProjectsGrid() {
   }
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Featured Projects</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Featured Projects</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto text-lg">
             Explore our portfolio of successful construction projects across various industries.
           </p>
-        </div>
+        </motion.div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project) => (
-            <div key={project.id} className="bg-gray-50 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-              <div className="bg-gray-200 border-2 border-dashed w-full h-48" />
+          {projects.map((project, index) => (
+            <motion.div
+              key={project.id}
+              className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
+              {project.thumbnail_url ? (
+                <div className="relative w-full h-56">
+                  <Image 
+                    src={project.thumbnail_url} 
+                    alt={project.title} 
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+              ) : (
+                <div className="bg-gray-200 border-2 border-dashed w-full h-56" />
+              )}
               <div className="p-6">
                 <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-xl font-semibold text-gray-900">{project.title}</h3>
-                  <span className={`px-2 py-1 text-xs rounded-full ${
+                  <h3 className="text-xl font-semibold text-gray-900 group-hover:text-primary-600 transition-colors">{project.title}</h3>
+                  <span className={`px-3 py-1 text-xs rounded-full font-medium ${
                     project.status === "completed" 
                       ? "bg-green-100 text-green-800" 
                       : project.status === "ongoing" 
@@ -92,20 +118,23 @@ export function ProjectsGrid() {
                   </span>
                   <Link 
                     href={`/projects/${project.slug}`}
-                    className="text-primary-500 font-medium hover:text-primary-700 transition-colors"
+                    className="text-primary-600 font-medium hover:text-primary-800 transition-colors flex items-center group"
                   >
-                    View Details →
+                    View Details 
+                    <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
                   </Link>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
         
         <div className="text-center mt-12">
           <Link 
             href="/projects" 
-            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary-500 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+            className="inline-flex items-center px-8 py-4 border border-transparent text-base font-medium rounded-xl shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-300 transform hover:-translate-y-1"
           >
             View All Projects
           </Link>

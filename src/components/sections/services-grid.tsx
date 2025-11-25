@@ -11,6 +11,7 @@ import {
   HardHat, 
   Wrench 
 } from "lucide-react";
+import { motion } from "framer-motion";
 
 const services = [
   {
@@ -65,33 +66,49 @@ const services = [
 
 export function ServicesGrid() {
   return (
-    <section className="py-16 bg-white">
+    <section className="py-20 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Services</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Services</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto text-lg">
             Comprehensive construction solutions tailored to meet the unique needs of various industries.
           </p>
-        </div>
+        </motion.div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
-              <Link 
+              <motion.div
                 key={index}
-                href={`/services/${service.slug}`}
-                className="bg-gray-50 rounded-lg p-6 hover:shadow-lg transition-shadow duration-300 group"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
               >
-                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary-500 transition-colors duration-300">
-                  <Icon className="w-6 h-6 text-primary-500 group-hover:text-white transition-colors duration-300" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">{service.title}</h3>
-                <p className="text-gray-600 mb-4">{service.description}</p>
-                <span className="text-primary-500 font-medium group-hover:text-primary-700 transition-colors duration-300">
-                  Learn more →
-                </span>
-              </Link>
+                <Link 
+                  href={`/services/${service.slug}`}
+                  className="bg-gray-50 rounded-lg p-6 hover:shadow-md transition-all duration-200 group h-full flex flex-col border border-gray-100 hover:border-primary-200"
+                >
+                  <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary-500 transition-colors duration-200">
+                    <Icon className="w-6 h-6 text-primary-500 group-hover:text-white transition-colors duration-200" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{service.title}</h3>
+                  <p className="text-gray-600 text-sm mb-4 flex-grow">{service.description}</p>
+                  <span className="text-primary-600 font-medium group-hover:text-primary-700 transition-colors duration-200 text-sm inline-flex items-center">
+                    Learn more 
+                    <svg className="w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                  </span>
+                </Link>
+              </motion.div>
             );
           })}
         </div>

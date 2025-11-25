@@ -29,13 +29,13 @@ The following database tables have been implemented:
 ## Pages Implemented
 
 ### Homepage (`/`)
-- Hero section with animated headline "Solid Pillars, Lasting Legacy"
-- Stats bar showing company metrics
-- Services grid displaying all 8 services
-- Industries showcase
-- Featured projects section
-- Testimonials carousel
-- Call-to-action section
+- Enhanced Hero section with improved animated headline "Solid Pillars, Lasting Legacy" and scroll indicator
+- Improved Stats bar with enhanced visual presentation and updated metrics
+- Enhanced Services grid with better visual hierarchy and hover effects
+- Refined Industries showcase with improved interaction design
+- Enhanced Featured projects section with better card design and hover animations
+- Improved Testimonials carousel with smoother transitions
+- Enhanced Call-to-action section with better visual contrast
 
 ### About Page (`/about`)
 - Hero section with company introduction
@@ -48,10 +48,18 @@ The following database tables have been implemented:
 ### Services Pages (`/services`)
 - Services listing page showing all services
 - Individual service detail pages (`/services/[slug]`)
+- Lightbox functionality for viewing service images in full size
+- Gallery support for services with multiple images
 
 ### Projects Pages (`/projects`)
 - Projects portfolio page
 - Individual project detail pages (`/projects/[slug]`)
+- Lightbox functionality for viewing project images in full size
+- Gallery support for projects with multiple images
+- Proper image assignment ensuring projects use images from corresponding directories:
+  - Signage projects use images from "Road signs" directory
+  - Construction projects use images from "Construction" directory
+  - Facility maintenance projects use images from "Facility Maintenance" directory
 
 ### Equipment Page (`/equipment`)
 - Equipment catalog showing available items for hire
@@ -78,15 +86,13 @@ The following database tables have been implemented:
 - Footer with company information and links
 
 ### Section Components
-- Hero section
-- Services grid
-- Projects grid
-- Stats bar
-- Testimonials carousel
-- Call-to-action section
-- Industries showcase
-- Team members display
-- Core values display
+- Hero section with enhanced animations and scroll indicator
+- Services grid with improved visual design
+- Projects grid with enhanced card design
+- Stats bar with updated visual presentation
+- Testimonials carousel with smoother transitions
+- Call-to-action section with better contrast
+- Industries showcase with refined interaction
 
 ### Form Components
 - Contact form with validation
@@ -101,6 +107,20 @@ Initial data has been seeded for:
 - **8 Equipment Items**: Poker Vibrator, Concrete Mixer, Compactor, Jack Hammer, Angle Grinder, Drilling Machine, Head Pan, Safety Equipment
 - **2 Team Members**: Smaila Shaibu Mensah and Nana Osei Yaw (Directors)
 
+## Image Management System
+
+A comprehensive image management system has been implemented:
+
+- Images organized in public directories by service type:
+  - `/public/Architectural Works/`
+  - `/public/Construction/`
+  - `/public/Facility Maintenance/`
+  - `/public/Road signs/`
+- Standardized naming convention: `service-name-01.jpg`, `service-name-02.jpg`, etc.
+- Automatic assignment of images to services and projects
+- Gallery functionality for projects with multiple images
+- Lightbox implementation for viewing images in full size
+
 ## Setup Scripts
 
 Database setup scripts have been created:
@@ -108,6 +128,9 @@ Database setup scripts have been created:
 - `scripts/setup-database.ts` - Seeds initial data
 - `scripts/reset-database.ts` - Resets and re-seeds data
 - `scripts/verify-data.ts` - Verifies data integrity
+- `scripts/update-service-images.ts` - Assigns images to services
+- `scripts/update-project-images.ts` - Assigns images to projects
+- `scripts/update-road-signs-projects.ts` - Updates road signs projects with new images
 
 ## Environment Configuration
 
@@ -150,6 +173,9 @@ npm run reset:db
 6. **Form Validation**: Zod validation for all forms
 7. **Animation**: Framer Motion for smooth transitions
 8. **Database Integration**: Supabase integration for data management
+9. **Image Gallery**: Lightbox functionality for viewing images
+10. **Proper Image Assignment**: Projects use images from corresponding directories
+11. **Enhanced UI/UX**: Improved visual design and user experience throughout the homepage
 
 ## File Structure
 

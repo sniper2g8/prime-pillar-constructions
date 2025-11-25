@@ -1,48 +1,53 @@
-@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme {
-  --color-background: #ffffff;
-  --color-foreground: #171717;
-  
-  /* PrimePillar Colors */
-  --color-primary: #1a3a5c;
-  --color-primary-50: #f0f5fa;
-  --color-primary-100: #d9e4ef;
-  --color-primary-200: #b3c9df;
-  --color-primary-300: #8daecf;
-  --color-primary-400: #4d7ba8;
-  --color-primary-500: #1a3a5c;
-  --color-primary-600: #162f4a;
-  --color-primary-700: #112438;
-  --color-primary-800: #0d1926;
-  --color-primary-900: #080d14;
-  
-  --color-secondary: #5a7186;
-  --color-secondary-50: #f5f7f9;
-  --color-secondary-100: #e8ecf0;
-  --color-secondary-200: #d1d9e1;
-  --color-secondary-300: #a8b7c5;
-  --color-secondary-400: #7f94a6;
-  --color-secondary-500: #5a7186;
-  --color-secondary-600: #485a6b;
-  --color-secondary-700: #364350;
-  --color-secondary-800: #242d36;
-  --color-secondary-900: #12161b;
-  
-  --color-accent-400: #fbbf24;
-  --color-accent-500: #d69e2e;
-  --color-accent-600: #b45309;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --color-background: #0a0a0a;
-    --color-foreground: #ededed;
+    --background: #ffffff;
+    --foreground: #171717;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: #0a0a0a;
+      --foreground: #ededed;
+    }
+  }
+  
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
 }
 
-body {
-  background: var(--color-background);
-  color: var(--color-foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .btn-primary {
+    background-color: #162f4a;
+    color: white;
+    font-weight: 700;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    transition-property: color, background-color;
+    transition-duration: 300ms;
+  }
+  
+  .btn-primary:hover {
+    background-color: #112438;
+  }
+  
+  .btn-secondary {
+    background-color: #d69e2e;
+    color: white;
+    font-weight: 700;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    transition-property: color, background-color;
+    transition-duration: 300ms;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #b45309;
+  }
 }

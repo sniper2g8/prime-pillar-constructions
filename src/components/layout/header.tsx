@@ -30,7 +30,7 @@ export function Header() {
   return (
     <header 
       className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled ? "bg-white/90 backdrop-blur-sm shadow-sm" : "bg-transparent"
+        scrolled ? "bg-white/95 backdrop-blur-sm shadow-sm" : "bg-transparent"
       }`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -44,12 +44,12 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
+            <div className="ml-10 flex items-baseline space-x-6">
               {navItems.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-gray-700 hover:text-primary-500 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  className="text-white hover:text-primary-200 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 md:text-gray-700 md:hover:text-primary-600"
                 >
                   {item.name}
                 </Link>
@@ -61,7 +61,7 @@ export function Header() {
           <div className="hidden md:block">
             <Link
               href="/quote"
-              className="bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+              className="bg-primary-600 hover:bg-primary-700 text-white px-5 py-2 rounded-md text-sm font-medium transition-colors duration-200"
             >
               Get a Quote
             </Link>
@@ -71,8 +71,10 @@ export function Header() {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-primary-500 focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-primary-200 focus:outline-none md:text-gray-700 md:hover:text-primary-600"
+              aria-expanded="false"
             >
+              <span className="sr-only">Open main menu</span>
               {isMenuOpen ? (
                 <X className="block h-6 w-6" aria-hidden="true" />
               ) : (
@@ -91,7 +93,7 @@ export function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-gray-700 hover:text-primary-500 block px-3 py-2 rounded-md text-base font-medium"
+                className="text-gray-700 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {item.name}
@@ -99,7 +101,7 @@ export function Header() {
             ))}
             <Link
               href="/quote"
-              className="bg-accent-500 hover:bg-accent-600 text-white block px-3 py-2 rounded-md text-base font-medium mt-4"
+              className="bg-primary-600 hover:bg-primary-700 text-white block px-3 py-2 rounded-md text-base font-medium mt-4"
               onClick={() => setIsMenuOpen(false)}
             >
               Get a Quote

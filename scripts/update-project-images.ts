@@ -22,11 +22,32 @@ const supabase = createClient(supabaseUrl, supabaseServiceRole)
 async function updateProjectImages() {
   console.log('Updating project images...')
   
-  // Define image mappings for each project with renamed files
-  const projectImageMap: Record<string, string> = {
-    "technipfmc-road-signs": "/Construction/construction-16.jpeg",
-    "heat-gold-fields-signage": "/Construction/construction-08.jpeg",
-    "burma-camp-residential": "/Construction/construction-04.jpeg"
+  // Define image mappings for each project with images from the correct directories
+  const projectImageMap: Record<string, { thumbnail: string; gallery: string[] }> = {
+    "technipfmc-road-signs": {
+      thumbnail: "/Road signs/road-signs-01.jpg",
+      gallery: [
+        "/Road signs/road-signs-01.jpg",
+        "/Road signs/road-signs-02.jpg",
+        "/Road signs/road-signs-03.jpg"
+      ]
+    },
+    "heat-gold-fields-signage": {
+      thumbnail: "/Road signs/road-signs-02.jpg",
+      gallery: [
+        "/Road signs/road-signs-02.jpg",
+        "/Road signs/road-signs-01.jpg",
+        "/Road signs/road-signs-03.jpg"
+      ]
+    },
+    "burma-camp-residential": {
+      thumbnail: "/Construction/construction-04.jpeg",
+      gallery: [
+        "/Construction/construction-04.jpeg",
+        "/Construction/construction-01.jpeg",
+        "/Construction/construction-02.jpeg"
+      ]
+    }
   }
 
   // Get all projects
@@ -41,23 +62,28 @@ async function updateProjectImages() {
 
   console.log(`Found ${projects.length} projects`)
 
-  // Update each project with its corresponding image
+  // Update each project with its corresponding images
   for (const project of projects) {
-    const imageUrl = projectImageMap[project.slug]
+    const imageConfig = projectImageMap[project.slug]
     
-    if (imageUrl) {
+    if (imageConfig) {
       const { error: updateError } = await supabase
         .from('projects')
-        .update({ thumbnail_url: imageUrl })
+        .update({ 
+          thumbnail_url: imageConfig.thumbnail,
+          gallery: imageConfig.gallery
+        })
         .eq('id', project.id)
 
       if (updateError) {
         console.error(`Error updating project ${project.title}:`, updateError)
       } else {
-        console.log(`Updated ${project.title} with image: ${imageUrl}`)
+        console.log(`Updated ${project.title}`)
+        console.log(`  Thumbnail: ${imageConfig.thumbnail}`)
+        console.log(`  Gallery: ${imageConfig.gallery.join(', ')}`)
       }
     } else {
-      console.log(`No image found for project: ${project.title}`)
+      console.log(`No image configuration found for project: ${project.title}`)
     }
   }
 
