@@ -66,7 +66,7 @@ const services = [
 
 export function ServicesGrid() {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           className="text-center mb-16"
@@ -94,19 +94,21 @@ export function ServicesGrid() {
               >
                 <Link 
                   href={`/services/${service.slug}`}
-                  className="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition-all duration-300 group h-full flex flex-col border border-gray-200 hover:border-gold-300"
+                  className="bg-white rounded-xl p-6 hover:shadow-xl transition-all duration-300 group h-full flex flex-col border border-gray-100 hover:border-primary-200"
                 >
-                  <div className="w-12 h-12 bg-gold-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-gold-600 transition-colors duration-200">
-                    <Icon className="w-6 h-6 text-gold-600 group-hover:text-white transition-colors duration-200" />
+                  <div className="w-16 h-16 bg-primary-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary-600 transition-colors duration-300 mx-auto">
+                    <Icon className="w-8 h-8 text-primary-600 group-hover:text-white transition-colors duration-300" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{service.title}</h3>
-                  <p className="text-gray-600 text-sm mb-4 flex-grow">{service.description}</p>
-                  <span className="text-gold-600 font-medium group-hover:text-gold-700 transition-colors duration-200 text-sm inline-flex items-center">
-                    Learn more 
-                    <svg className="w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                  </span>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">{service.title}</h3>
+                  <p className="text-gray-600 text-sm mb-4 flex-grow text-center">{service.description}</p>
+                  <div className="text-center mt-2">
+                    <span className="text-primary-600 font-medium group-hover:text-primary-700 transition-colors duration-300 text-sm inline-flex items-center">
+                      Learn more 
+                      <svg className="w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                      </svg>
+                    </span>
+                  </div>
                 </Link>
               </motion.div>
             );

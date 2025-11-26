@@ -16,28 +16,29 @@ export function Hero() {
           className="object-cover"
           priority
         />
-        {/* Lighter overlay to ensure nav readability */}
-        <div className="absolute inset-0 bg-black/40"></div>
+        {/* Gradient overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/80"></div>
       </div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-32 md:py-40 relative z-10">
-        <div className="max-w-3xl">
+        <div className="max-w-4xl">
           <motion.h1 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 leading-tight"
+            className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight mb-6 leading-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            Building Excellence <br className="hidden sm:block" />In Construction
+            Building Excellence <br className="hidden sm:block" />Across Ghana
           </motion.h1>
           
           <motion.p 
-            className="text-lg md:text-xl text-gray-200 mb-10 max-w-2xl leading-relaxed"
+            className="text-lg md:text-xl text-gray-200 mb-10 max-w-3xl leading-relaxed text-lg"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            Delivering premium construction services across Ghana and West Africa with precision, quality, and innovation.
+            Delivering premium construction services across Ghana and West Africa with precision, quality, and innovation. 
+            From architectural design to civil works, we build the future.
           </motion.p>
           
           <motion.div 
@@ -47,36 +48,46 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <Link 
-              href="/services" 
-              className="bg-gold-600 hover:bg-gold-700 text-white font-bold py-4 px-8 rounded-lg text-center transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              href="/projects" 
+              className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-4 px-8 rounded-full text-center transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
-              Our Services
+              View Our Projects
             </Link>
             <Link 
               href="/quote" 
-              className="bg-transparent border-2 border-white text-white hover:bg-white/10 font-bold py-4 px-8 rounded-lg text-center transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              className="bg-transparent border-2 border-white text-white hover:bg-white/10 font-bold py-4 px-8 rounded-full text-center transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
-              Get a Quote
+              Request a Quote
             </Link>
           </motion.div>
         </div>
       </div>
       
-      {/* Scroll indicator */}
+      {/* Stats bar */}
       <motion.div 
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden md:block"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 1 }}
+        className="absolute bottom-0 left-0 right-0 bg-black/50 backdrop-blur-sm py-4"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
       >
-        <div className="flex flex-col items-center">
-          <span className="text-sm mb-2 text-gray-200">Explore our work</span>
-          <div className="w-6 h-10 rounded-full border-2 border-white flex justify-center p-1">
-            <motion.div 
-              className="w-1 h-1 bg-white rounded-full"
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            />
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div>
+              <div className="text-2xl font-bold text-primary-400">50+</div>
+              <div className="text-gray-300 text-sm">Projects Completed</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-primary-400">15+</div>
+              <div className="text-gray-300 text-sm">Years Experience</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-primary-400">200+</div>
+              <div className="text-gray-300 text-sm">Happy Clients</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-primary-400">8+</div>
+              <div className="text-gray-300 text-sm">Services Offered</div>
+            </div>
           </div>
         </div>
       </motion.div>

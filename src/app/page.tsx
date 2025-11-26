@@ -1,7 +1,6 @@
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Hero } from "@/components/sections/hero";
-import { StatsBar } from "@/components/sections/stats-bar";
 import { ServicesGrid } from "@/components/sections/services-grid";
 import { Industries } from "@/components/sections/industries";
 import { ProjectsGrid } from "@/components/sections/projects-grid";
@@ -14,7 +13,6 @@ export default function Home() {
       <Header />
       <main className="flex-grow">
         <Hero />
-        <StatsBar />
         <ServicesGrid />
         <Industries />
         <Suspense fallback={<div>Loading projects...</div>}>

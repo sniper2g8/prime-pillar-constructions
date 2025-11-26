@@ -17,6 +17,7 @@ import Image from "next/image";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 // Map icon identifiers to actual components
 const iconComponentMap = {
@@ -59,15 +60,52 @@ export function ServicesContent({ services, iconMap }: { services: any[]; iconMa
       <Header />
       <main className="flex-grow pt-16">
         {/* Hero Section */}
-        <section className="bg-gradient-to-r from-primary-500 to-primary-700 text-white py-16">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl">
-              <h1 className="text-4xl md:text-5xl font-bold tracking-wide uppercase mb-6">
+        <section className="relative bg-gradient-to-r from-primary-600 to-primary-800 text-white py-20 md:py-28">
+          <div className="absolute inset-0 bg-black/30"></div>
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="max-w-4xl mx-auto text-center">
+              <motion.h1 
+                className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
                 Our Services
-              </h1>
-              <p className="text-xl text-gray-200">
-                Comprehensive construction solutions tailored to meet the unique needs of various industries.
-              </p>
+              </motion.h1>
+              <motion.p 
+                className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                Comprehensive construction solutions tailored to meet the unique needs of various industries
+              </motion.p>
+            </div>
+          </div>
+        </section>
+
+        {/* Services Intro */}
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl mx-auto text-center mb-12">
+              <motion.h2 
+                className="text-3xl font-bold text-gray-900 mb-4"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3 }}
+              >
+                Construction Excellence Across Industries
+              </motion.h2>
+              <motion.p 
+                className="text-gray-600 text-lg"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: 0.1 }}
+              >
+                We provide specialized construction services designed to deliver exceptional results for clients in mining, oil & gas, energy, government, and commercial sectors.
+              </motion.p>
             </div>
           </div>
         </section>
@@ -83,45 +121,57 @@ export function ServicesContent({ services, iconMap }: { services: any[]; iconMa
                 const Icon = iconComponentMap[iconId as keyof typeof iconComponentMap] || Compass;
                 
                 return (
-                  <Link 
+                  <motion.div
                     key={service.id}
-                    href={`/services/${service.slug}`}
-                    className="bg-gray-50 rounded-lg p-6 hover:shadow-lg transition-shadow duration-300 group"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: serviceIndex * 0.1 }}
                   >
-                    {/* Service Image */}
-                    {service.image_url ? (
-                      <div 
-                        className="mb-4 rounded-lg overflow-hidden h-48 cursor-pointer relative"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          openLightbox(serviceIndex);
-                        }}
-                      >
-                        <Image 
-                          src={service.image_url} 
-                          alt={service.title} 
-                          fill
-                          className="object-cover hover:opacity-90 transition-opacity"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                          <div className="bg-black/50 rounded-full p-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
+                    <Link 
+                      href={`/services/${service.slug}`}
+                      className="bg-white rounded-xl p-6 hover:shadow-xl transition-all duration-300 group border border-gray-100 hover:border-primary-200"
+                    >
+                      {/* Service Image */}
+                      {service.image_url ? (
+                        <div 
+                          className="mb-4 rounded-lg overflow-hidden h-48 cursor-pointer relative group-hover:shadow-lg transition-all duration-300"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            openLightbox(serviceIndex);
+                          }}
+                        >
+                          <Image 
+                            src={service.image_url} 
+                            alt={service.title} 
+                            fill
+                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                              </svg>
+                            </div>
                           </div>
                         </div>
+                      ) : (
+                        <div className="w-16 h-16 bg-primary-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary-500 transition-colors duration-300 mx-auto">
+                          <Icon className="w-8 h-8 text-primary-500 group-hover:text-white transition-colors duration-300" />
+                        </div>
+                      )}
+                      <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">{service.title}</h3>
+                      <p className="text-gray-600 mb-4 text-center">{service.short_description}</p>
+                      <div className="text-center">
+                        <span className="text-primary-600 font-medium group-hover:text-primary-700 transition-colors duration-300 inline-flex items-center">
+                          Learn more 
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </span>
                       </div>
-                    ) : (
-                      <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary-500 transition-colors duration-300">
-                        <Icon className="w-6 h-6 text-primary-500 group-hover:text-white transition-colors duration-300" />
-                      </div>
-                    )}
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{service.title}</h3>
-                    <p className="text-gray-600 mb-4">{service.short_description}</p>
-                    <span className="text-primary-500 font-medium group-hover:text-primary-700 transition-colors duration-300">
-                      Learn more →
-                    </span>
-                  </Link>
+                    </Link>
+                  </motion.div>
                 );
               })}
             </div>
