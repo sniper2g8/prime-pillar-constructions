@@ -104,6 +104,19 @@ export async function POST(request: NextRequest) {
         stack: emailError.stack
       });
       // Don't fail the request if email sending fails
+      // But include the error in the response for debugging
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          message: emailError.message || "Failed to send email notification. Please try again." 
+        }),
+        { 
+          status: 500,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
     }
     
     return new Response(

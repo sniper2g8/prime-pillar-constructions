@@ -2,7 +2,7 @@ import { Resend } from 'resend';
 import { SITE_CONFIG } from './constants';
 
 // Create a Resend client
-const resend = new Resend(process.env.RESEND_API_KEY || 're_123456789');
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Send email notification for quote requests
 export async function sendQuoteNotification(
@@ -19,6 +19,12 @@ export async function sendQuoteNotification(
 ) {
   try {
     console.log('Attempting to send quote notification email via Resend...');
+    
+    // Check if Resend API key is configured
+    if (!process.env.RESEND_API_KEY) {
+      throw new Error('RESEND_API_KEY is not configured in environment variables');
+    }
+    
     console.log('From email:', process.env.EMAIL_USER || SITE_CONFIG.email);
     console.log('To email:', SITE_CONFIG.email);
     
@@ -43,7 +49,7 @@ export async function sendQuoteNotification(
 
     if (error) {
       console.error('Resend error:', error);
-      throw new Error(error.message);
+      throw new Error(`Resend error: ${error.message}`);
     }
 
     console.log('Quote notification email sent successfully via Resend');
@@ -55,7 +61,7 @@ export async function sendQuoteNotification(
       name: error.name,
       stack: error.stack
     });
-    throw error;
+    throw new Error(`Failed to send notification email: ${error.message}`);
   }
 }
 
@@ -66,6 +72,12 @@ export async function sendQuoteConfirmation(
 ) {
   try {
     console.log('Attempting to send quote confirmation email via Resend...');
+    
+    // Check if Resend API key is configured
+    if (!process.env.RESEND_API_KEY) {
+      throw new Error('RESEND_API_KEY is not configured in environment variables');
+    }
+    
     console.log('From email:', process.env.EMAIL_USER || SITE_CONFIG.email);
     console.log('To email:', clientEmail);
     
@@ -86,7 +98,7 @@ export async function sendQuoteConfirmation(
 
     if (error) {
       console.error('Resend error:', error);
-      throw new Error(error.message);
+      throw new Error(`Resend error: ${error.message}`);
     }
 
     console.log('Quote confirmation email sent successfully via Resend');
@@ -98,6 +110,6 @@ export async function sendQuoteConfirmation(
       name: error.name,
       stack: error.stack
     });
-    throw error;
+    throw new Error(`Failed to send confirmation email: ${error.message}`);
   }
 }
