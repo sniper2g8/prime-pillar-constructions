@@ -35,8 +35,9 @@ export function ContactForm() {
 
   const onSubmit = async (data: ContactFormData) => {
     // Execute reCAPTCHA to get token
+    let token = null;
     if (recaptchaRef.current) {
-      const token = await recaptchaRef.current.executeAsync();
+      token = await recaptchaRef.current.executeAsync();
       setRecaptchaToken(token);
       
       if (!token) {
@@ -56,7 +57,7 @@ export function ContactForm() {
         },
         body: JSON.stringify({
           ...data,
-          recaptchaToken: recaptchaToken
+          recaptchaToken: token
         }),
       });
       
