@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -20,6 +21,8 @@ export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const {
     register,
@@ -31,6 +34,17 @@ export function ContactForm() {
   });
 
   const onSubmit = async (data: ContactFormData) => {
+    // Execute reCAPTCHA to get token
+    if (recaptchaRef.current) {
+      const token = await recaptchaRef.current.executeAsync();
+      setRecaptchaToken(token);
+      
+      if (!token) {
+        setSubmitError("reCAPTCHA verification failed. Please try again.");
+        return;
+      }
+    }
+
     setIsSubmitting(true);
     setSubmitError("");
     
@@ -40,7 +54,10 @@ export function ContactForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          recaptchaToken: recaptchaToken
+        }),
       });
       
       const result = await response.json();
@@ -51,11 +68,24 @@ export function ContactForm() {
         
         // Reset success message after 5 seconds
         setTimeout(() => setSubmitSuccess(false), 5000);
+        
+        // Reset reCAPTCHA
+        if (recaptchaRef.current) {
+          recaptchaRef.current.reset();
+        }
       } else {
         setSubmitError(result.message || "Failed to send message. Please try again.");
+        // Reset reCAPTCHA on error
+        if (recaptchaRef.current) {
+          recaptchaRef.current.reset();
+        }
       }
     } catch (error) {
       setSubmitError("Failed to send message. Please try again.");
+      // Reset reCAPTCHA on error
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset();
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -74,6 +104,13 @@ export function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      {/* Hidden reCAPTCHA */}
+      <ReCAPTCHA
+        ref={recaptchaRef}
+        size="invisible"
+        sitekey="6Lcq6BssAAAAAMPwxZZoUlErabikH46kXp4vXF89"
+      />
+      
       {submitSuccess && (
         <div className="rounded-md bg-green-50 p-4">
           <div className="flex">
