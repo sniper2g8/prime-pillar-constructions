@@ -14,27 +14,60 @@ type Service = {
   id: string;
   title: string;
   slug: string;
-  icon: string;
   short_description: string;
-  full_description: string;
+  full_description?: string;
   features: string[];
   image_url?: string;
-  gallery: string[];
-  display_order: number;
-  is_active: boolean;
   created_at: string;
+  updated_at: string;
+  gallery?: string[];
 };
 
+// Define the Project type
+interface Project {
+  id: string;
+  title: string;
+  slug: string;
+  client: string;
+  industry: 'mining' | 'oil_gas' | 'energy' | 'government' | 'commercial' | 'infrastructure';
+  location?: string;
+  year?: number;
+  status: 'completed' | 'ongoing' | 'upcoming';
+  short_description: string;
+  full_description?: string;
+  scope?: string;
+  featured: boolean;
+  thumbnail_url?: string;
+  gallery: string[];
+  created_at: string;
+  updated_at: string;
+}
+
 // Client component for interactive features
-export function ServiceContent({ service }: { service: Service }) {
+export function ServiceContent({ 
+  service,
+  projects = [],
+  imagePaths = [],
+  nonImageFeatures = []
+}: { 
+  service: Service;
+  projects?: Project[];
+  imagePaths?: string[];
+  nonImageFeatures?: string[];
+}) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
   // Prepare slides for lightbox
-  const slides = service.gallery?.map((image: string) => ({
-    src: image,
-    alt: `${service.title} - Gallery Image`
-  })) || [];
+  const slides = imagePaths && imagePaths.length > 0 
+    ? imagePaths.map((image: string) => ({
+        src: image,
+        alt: `${service.title} - Gallery Image`
+      }))
+    : service.gallery?.map((image: string) => ({
+        src: image,
+        alt: `${service.title} - Gallery Image`
+      })) || [];
 
   const openLightbox = (index: number) => {
     setLightboxIndex(index);
@@ -88,7 +121,35 @@ export function ServiceContent({ service }: { service: Service }) {
                   Service Gallery
                 </motion.h2>
                 
-                {service.gallery && service.gallery.length > 0 ? (
+                {imagePaths && imagePaths.length > 0 ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {imagePaths.map((image: string, index: number) => (
+                      <motion.div 
+                        key={index} 
+                        className="relative rounded-xl overflow-hidden w-full h-64 cursor-pointer group"
+                        onClick={() => openLightbox(index)}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.3, delay: index * 0.1 }}
+                      >
+                        <Image 
+                          src={image} 
+                          alt={`${service.title} - Image ${index + 1}`} 
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                          <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                ) : service.gallery && service.gallery.length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {service.gallery.map((image: string, index: number) => (
                       <motion.div 
@@ -156,7 +217,7 @@ export function ServiceContent({ service }: { service: Service }) {
               </motion.div>
 
               {/* Features */}
-              {service.features && service.features.length > 0 && (
+              {nonImageFeatures && nonImageFeatures.length > 0 && (
                 <motion.div 
                   className="mb-16"
                   initial={{ opacity: 0, y: 20 }}
@@ -166,7 +227,7 @@ export function ServiceContent({ service }: { service: Service }) {
                 >
                   <h2 className="text-3xl font-bold text-gray-900 mb-6">Key Features</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {service.features.map((feature, index) => (
+                    {nonImageFeatures.map((feature, index) => (
                       <div key={index} className="flex items-start p-4 bg-gray-50 rounded-lg">
                         <div className="flex-shrink-0 mt-1">
                           <div className="w-5 h-5 bg-primary-500 rounded-full flex items-center justify-center">
