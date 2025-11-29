@@ -1,19 +1,8 @@
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 import { SITE_CONFIG } from './constants';
 
-// Create a transporter object using SMTP transport
-const createTransporter = () => {
-  const port = parseInt(process.env.SMTP_PORT || '465');
-  return nodemailer.createTransport({
-    host: process.env.SMTP_HOST || 'smtp.hostinger.com',
-    port: port,
-    secure: port === 465, // true for 465, false for other ports
-    auth: {
-      user: process.env.EMAIL_USER || 'your-email@gmail.com',
-      pass: process.env.EMAIL_PASS || 'your-app-password',
-    },
-  });
-};
+// Create a Resend client
+const resend = new Resend(process.env.RESEND_API_KEY || 're_123456789');
 
 // Send email notification for quote requests
 export async function sendQuoteNotification(
@@ -29,11 +18,13 @@ export async function sendQuoteNotification(
   }
 ) {
   try {
-    const transporter = createTransporter();
+    console.log('Attempting to send quote notification email via Resend...');
+    console.log('From email:', process.env.EMAIL_USER || SITE_CONFIG.email);
+    console.log('To email:', SITE_CONFIG.email);
     
-    const mailOptions = {
-      from: `"${SITE_CONFIG.name}" <${process.env.EMAIL_USER || SITE_CONFIG.email}>`,
-      to: SITE_CONFIG.email,
+    const { data, error } = await resend.emails.send({
+      from: `${SITE_CONFIG.name} <${process.env.EMAIL_USER || SITE_CONFIG.email}>`,
+      to: [SITE_CONFIG.email],
       subject: `New Quote Request from ${quoteData.name}`,
       html: `
         <h2>New Quote Request</h2>
@@ -48,13 +39,22 @@ export async function sendQuoteNotification(
         <hr>
         <p>Please follow up with this client within 24-48 hours.</p>
       `,
-    };
+    });
 
-    const result = await transporter.sendMail(mailOptions);
-    console.log('Quote notification email sent successfully');
-    return result;
-  } catch (error) {
+    if (error) {
+      console.error('Resend error:', error);
+      throw new Error(error.message);
+    }
+
+    console.log('Quote notification email sent successfully via Resend');
+    return data;
+  } catch (error: any) {
     console.error('Error sending quote notification email:', error);
+    console.error('Error details:', {
+      message: error.message,
+      name: error.name,
+      stack: error.stack
+    });
     throw error;
   }
 }
@@ -65,11 +65,13 @@ export async function sendQuoteConfirmation(
   clientName: string
 ) {
   try {
-    const transporter = createTransporter();
+    console.log('Attempting to send quote confirmation email via Resend...');
+    console.log('From email:', process.env.EMAIL_USER || SITE_CONFIG.email);
+    console.log('To email:', clientEmail);
     
-    const mailOptions = {
-      from: `"${SITE_CONFIG.name}" <${process.env.EMAIL_USER || SITE_CONFIG.email}>`,
-      to: clientEmail,
+    const { data, error } = await resend.emails.send({
+      from: `${SITE_CONFIG.name} <${process.env.EMAIL_USER || SITE_CONFIG.email}>`,
+      to: [clientEmail],
       subject: `Thank you for your quote request - ${SITE_CONFIG.name}`,
       html: `
         <h2>Thank You for Your Quote Request</h2>
@@ -80,13 +82,22 @@ export async function sendQuoteConfirmation(
         <hr>
         <p>This is an automated message. Please do not reply to this email.</p>
       `,
-    };
+    });
 
-    const result = await transporter.sendMail(mailOptions);
-    console.log('Quote confirmation email sent successfully');
-    return result;
-  } catch (error) {
+    if (error) {
+      console.error('Resend error:', error);
+      throw new Error(error.message);
+    }
+
+    console.log('Quote confirmation email sent successfully via Resend');
+    return data;
+  } catch (error: any) {
     console.error('Error sending quote confirmation email:', error);
+    console.error('Error details:', {
+      message: error.message,
+      name: error.name,
+      stack: error.stack
+    });
     throw error;
   }
 }

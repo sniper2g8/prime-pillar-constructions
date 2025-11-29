@@ -79,6 +79,7 @@ export async function POST(request: NextRequest) {
     
     // Send email notifications
     try {
+      console.log("Sending email notifications...");
       // Send notification to company
       await sendQuoteNotification({
         name: validatedData.name,
@@ -93,8 +94,15 @@ export async function POST(request: NextRequest) {
       
       // Send confirmation to client
       await sendQuoteConfirmation(validatedData.email, validatedData.name);
-    } catch (emailError) {
+      console.log("Email notifications sent successfully");
+    } catch (emailError: any) {
       console.error("Error sending email notifications:", emailError);
+      console.error("Email error details:", {
+        message: emailError.message,
+        code: emailError.code,
+        command: emailError.command,
+        stack: emailError.stack
+      });
       // Don't fail the request if email sending fails
     }
     
