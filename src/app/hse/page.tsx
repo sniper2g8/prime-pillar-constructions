@@ -1,4 +1,6 @@
 
+
+import { Metadata } from "next";
 import HSEClientPage from "./hse-client";
 
 export const metadata: Metadata = {
