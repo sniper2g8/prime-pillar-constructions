@@ -18,19 +18,37 @@ export async function sendQuoteNotification(
   }
 ) {
   try {
-    console.log('Attempting to send quote notification email via Resend...');
+    console.log('=== EMAIL DEBUG INFO ===');
+    console.log('RESEND_API_KEY exists:', !!process.env.RESEND_API_KEY);
+    console.log('RESEND_API_KEY length:', process.env.RESEND_API_KEY?.length || 0);
+    console.log('FROM email:', process.env.EMAIL_USER || SITE_CONFIG.email);
+    console.log('TO email:', SITE_CONFIG.email);
+    console.log('SITE_CONFIG.email:', SITE_CONFIG.email);
+    console.log('========================');
     
     // Check if Resend API key is configured
     if (!process.env.RESEND_API_KEY) {
       throw new Error('RESEND_API_KEY is not configured in environment variables');
     }
     
-    console.log('From email:', process.env.EMAIL_USER || SITE_CONFIG.email);
-    console.log('To email:', SITE_CONFIG.email);
+    // Check if API key format is valid
+    if (!process.env.RESEND_API_KEY.startsWith('re_')) {
+      throw new Error('Invalid RESEND_API_KEY format. Must start with "re_"');
+    }
+    
+    const fromEmail = process.env.EMAIL_USER || SITE_CONFIG.email;
+    const toEmail = SITE_CONFIG.email;
+    
+    // Validate email addresses
+    if (!fromEmail || !toEmail) {
+      throw new Error('Missing required email addresses');
+    }
+    
+    console.log('Attempting to send quote notification email via Resend...');
     
     const { data, error } = await resend.emails.send({
-      from: `${SITE_CONFIG.name} <${process.env.EMAIL_USER || SITE_CONFIG.email}>`,
-      to: [SITE_CONFIG.email],
+      from: `${SITE_CONFIG.name} <${fromEmail}>`,
+      to: [toEmail],
       subject: `New Quote Request from ${quoteData.name}`,
       html: `
         <h2>New Quote Request</h2>
@@ -71,18 +89,34 @@ export async function sendQuoteConfirmation(
   clientName: string
 ) {
   try {
-    console.log('Attempting to send quote confirmation email via Resend...');
+    console.log('=== EMAIL CONFIRMATION DEBUG INFO ===');
+    console.log('RESEND_API_KEY exists:', !!process.env.RESEND_API_KEY);
+    console.log('RESEND_API_KEY length:', process.env.RESEND_API_KEY?.length || 0);
+    console.log('FROM email:', process.env.EMAIL_USER || SITE_CONFIG.email);
+    console.log('TO email:', clientEmail);
+    console.log('=====================================');
     
     // Check if Resend API key is configured
     if (!process.env.RESEND_API_KEY) {
       throw new Error('RESEND_API_KEY is not configured in environment variables');
     }
     
-    console.log('From email:', process.env.EMAIL_USER || SITE_CONFIG.email);
-    console.log('To email:', clientEmail);
+    // Check if API key format is valid
+    if (!process.env.RESEND_API_KEY.startsWith('re_')) {
+      throw new Error('Invalid RESEND_API_KEY format. Must start with "re_"');
+    }
+    
+    const fromEmail = process.env.EMAIL_USER || SITE_CONFIG.email;
+    
+    // Validate email addresses
+    if (!fromEmail || !clientEmail) {
+      throw new Error('Missing required email addresses');
+    }
+    
+    console.log('Attempting to send quote confirmation email via Resend...');
     
     const { data, error } = await resend.emails.send({
-      from: `${SITE_CONFIG.name} <${process.env.EMAIL_USER || SITE_CONFIG.email}>`,
+      from: `${SITE_CONFIG.name} <${fromEmail}>`,
       to: [clientEmail],
       subject: `Thank you for your quote request - ${SITE_CONFIG.name}`,
       html: `

@@ -116,12 +116,11 @@ export async function POST(request: NextRequest) {
         command: emailError.command,
         stack: emailError.stack
       });
-      // Don't fail the request if email sending fails
-      // But include the error in the response for debugging
+      // Return the specific error to the client
       return new Response(
         JSON.stringify({ 
           success: false, 
-          message: emailError.message || "Failed to send email notification. Please try again." 
+          message: `Email error: ${emailError.message || "Failed to send email notification. Please try again."}` 
         }),
         { 
           status: 500,
@@ -144,13 +143,13 @@ export async function POST(request: NextRequest) {
         },
       }
     );
-  } catch (error) {
+  } catch (error: any) {
     console.error("Quote form error:", error);
     
     return new Response(
       JSON.stringify({ 
         success: false, 
-        message: "Failed to submit quote request. Please try again." 
+        message: `Server error: ${error.message || "Failed to submit quote request. Please try again."}` 
       }),
       { 
         status: 400,
