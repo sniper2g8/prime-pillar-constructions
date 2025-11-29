@@ -3,12 +3,11 @@ import { SITE_CONFIG } from './constants';
 
 // Create a transporter object using SMTP transport
 const createTransporter = () => {
-  // In production, you would use environment variables for these credentials
-  // For now, we'll use placeholder values
+  const port = parseInt(process.env.SMTP_PORT || '465');
   return nodemailer.createTransport({
-    host: process.env.SMTP_HOST || 'smtp.gmail.com',
-    port: parseInt(process.env.SMTP_PORT || '587'),
-    secure: false, // true for 465, false for other ports
+    host: process.env.SMTP_HOST || 'smtp.hostinger.com',
+    port: port,
+    secure: port === 465, // true for 465, false for other ports
     auth: {
       user: process.env.EMAIL_USER || 'your-email@gmail.com',
       pass: process.env.EMAIL_PASS || 'your-app-password',
