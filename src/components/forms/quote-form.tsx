@@ -187,7 +187,7 @@ export function QuoteForm() {
           <ReCAPTCHA
             ref={recaptchaRef}
             size="invisible"
-            sitekey="6Lcq6BssAAAAAMPwxZZoUlErabikH46kXp4vXF89"
+            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "6LcL8BssAAAAALPfN_L49nltXxnqPoQr_mZCkClY"}
           />
           
           {/* Progress Bar */}
